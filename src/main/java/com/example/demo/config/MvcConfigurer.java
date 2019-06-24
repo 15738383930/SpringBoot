@@ -15,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.demo.entity.User;
 
 @Configuration
+/*@ComponentScan(basePackages = {"com.example.demo.controller"})
+@EnableWebMvc   // 启用spring mvc
+@EnableSpringDataWebSupport */    // 启用springmvc对spring data的支持
 public class MvcConfigurer implements WebMvcConfigurer {
 	
 	/**
