@@ -26,17 +26,18 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-	@Column()
+	@Column(name="name")
     private String name;
 
-	@Column
+	@Column(name="type")
     private String type;
-	@Column
+
+	@Column(name="age")
     private Integer age;
 
-	@Column
+	@Column(name="sex")
     private String sex;
-    
+	
     // JPA要求实体必须有一个空的构造函数
     public User() {}
 

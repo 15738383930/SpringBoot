@@ -23,10 +23,10 @@ public class UserForm {
 	//@Size(min=3,max=12)
 	//用户名：以字母开头，可带数字、下划线、. 等字符 长度3到12
 	@Pattern(regexp="^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){2,11}$")
-    private String username;
+    private String userName;
 
     @Size(min=8,max=16)
-    private String password;
+    private String passWord;
 
     @Range(min=1,max=120)
     private Integer age;
@@ -40,22 +40,6 @@ public class UserForm {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 
     public Integer getAge() {
@@ -72,5 +56,21 @@ public class UserForm {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
 	}
 }

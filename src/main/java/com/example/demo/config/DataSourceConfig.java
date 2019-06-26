@@ -11,13 +11,15 @@ import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * 数据源配置
+ * com.zaxxer.hikari.HikariDataSource 
+ * （Spring Boot 2.0 以上，默认使用此数据源），无需配置
  * @author zhouhao
  *
  */
-@Configuration
+//@Configuration
 public class DataSourceConfig {
 	
-	@Bean(name = "dataSource")
+//	@Bean(name = "dataSource")
 	public DataSource dataSource(Environment env) {
 		HikariDataSource ds = new HikariDataSource();
 		ds.setJdbcUrl(env.getProperty(CommUtil.Property.DATASOURCE_URL));

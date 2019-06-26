@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+input {
+	margin-left: 50px;
+}
+
+strong {
+	padding-left: 130px;
+}
+
+.type {
+	margin-left: 50px;
+}
+
+.in {
+	margin-left: 130px;
+}
+
+textarea{
+	margin-left: 130px;
+}
+img{
+	margin-left: 130px;
+}

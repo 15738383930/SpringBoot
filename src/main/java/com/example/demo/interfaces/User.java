@@ -2,5 +2,5 @@ package com.example.demo.interfaces;
 
 public @interface User {
 	
-	String[] name() default {"Hello","name"};
+	String[] name1() default {"Hello","name"};
 }
