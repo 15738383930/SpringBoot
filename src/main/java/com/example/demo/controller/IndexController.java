@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.service.UserService;
+import com.example.demo.utils.CommUtil;
 /**
  * 首页
  * @author zhouhao
  *
  */
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
@@ -33,7 +34,8 @@ public class IndexController {
 	@GetMapping("/")
 	public ModelAndView index(){
 		ModelAndView view = new ModelAndView("/index");
-		view.addObject("user", userService.queryUserById(1));
+		view.addObject("users", userService.allUserInfo());
+		view.addObject("dictionarys", super.dictionaryListByParentName(CommUtil.Property.DICTIONARY_PARENT_NAME_CHARACTER_TYPE));
 		return view;
 	}
 	

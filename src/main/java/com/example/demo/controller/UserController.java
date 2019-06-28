@@ -19,6 +19,11 @@ import com.example.demo.form.UserForm;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.Result;
 
+/**
+ * 用户控制器
+ * @author zhouhao
+ *
+ */
 @RestController
 @RequestMapping("/user")
 @SuppressWarnings("rawtypes")

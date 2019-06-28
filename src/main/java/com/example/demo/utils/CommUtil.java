@@ -41,6 +41,12 @@ public interface CommUtil {
 		 * 错误请求的URL
 		 */
 		public static final String ERROR_PATH = "/error";
+		
+		/**
+		 * 父字典名称-人物类型
+		 */
+		public static final String DICTIONARY_PARENT_NAME_CHARACTER_TYPE = "人物类型";
+		
 	}
 
 	/**
