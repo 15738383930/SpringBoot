@@ -21,20 +21,30 @@ public class Dictionary {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-	//字典code
+	/**
+	 * 字典code
+	 */
     private Integer code;
 
-    //字典名称
+    /**
+     * 字典名称
+     */
     private String name;
 
-    //备注
+    /**
+     * 备注
+     */
     private String remark;
 
-    //父字典id （若为空，则该字典的id为父字典id）
+    /**
+     * 父字典id （若为空，则该字典的id为父字典id）
+     */
 	@Column(name="parent_id")
     private Integer parentId;
 
-    // JPA要求实体必须有一个空的构造函数
+    /**
+     * JPA要求实体必须有一个空的构造函数
+     */
     public Dictionary() {}
 
 }

@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -22,12 +24,25 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userDao;
-	
-	private User user;
 
 	@Override
 	public List<User> allUserInfo() {
 		return userDao.findAll();
+	}
+
+	@Override
+	public List<User> userSearch(User user) {
+		boolean flag = false;
+		/*User.setUser(user) ;
+		if (null != user) {
+			if (user.getName())
+				Arrays.stream()
+		} else {
+		}
+		if (flag) {
+			USERS = allUserInfo();
+		}*/
+		return User.getUsers();
 	}
 
 	@Override
@@ -38,23 +53,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean addUserInfo(UserForm userForm) {
-		user = new User();
-		BeanUtils.copyProperties(userForm, user);
+		BeanUtils.copyProperties(userForm, User.getUser());
 		return true;
 	}
 
 	@Override
 	@Transactional
 	public boolean updateUserInfo(UserForm userForm) {
-		user = new User();
-		BeanUtils.copyProperties(userForm, user);
+		BeanUtils.copyProperties(userForm, User.getUser());
 		return true;
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteUserInfo(User user) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

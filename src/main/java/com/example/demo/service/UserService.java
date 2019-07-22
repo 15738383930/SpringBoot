@@ -17,6 +17,13 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> allUserInfo();
+
+	/**
+	 * 根据条件检索用户信息
+	 * @param user
+	 * @return
+	 */
+	List<User> userSearch(User user);
 	
 	/**
 	 * 根据id查询用户信息

@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,6 +48,26 @@ public class User {
 
     //人物肖像（URL）
     private String portrait;
+
+    private static final User USER = new User();
+
+    private static final List<User> USERS = new ArrayList<User>();
+
+    public static User getUser() {
+        return USER;
+    }
+
+    public static User setUser(final User user) {
+        return user;
+    }
+
+    public static List<User> getUsers() {
+        return USERS;
+    }
+
+    public static List<User> getUsers(final List<User> users) {
+        return users;
+    }
 
     // JPA要求实体必须有一个空的构造函数
     public User() {}

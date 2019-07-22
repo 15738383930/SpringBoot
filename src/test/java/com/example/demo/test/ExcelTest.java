@@ -1,35 +1,20 @@
-package com.example.demo;
+package com.example.demo.test;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class DemoApplicationTests {
+/**
+ * @Author zhou
+ * @Date 2019/7/11 11:43
+ */
+public class ExcelTest {
 
-	@Test
-	public void contextLoads() {
-        Logger logger = LoggerFactory.getLogger(getClass());     
-        logger.error("error ...哈哈");
-        logger.warn("warn ...嗯嗯");
-        logger.debug("debug ...");
-        logger.info("info ...");
-        logger.trace("trace ...");
-	}
-
-    @Test
     public String createExcel(HttpServletResponse response) throws IOException {
 
         //创建HSSFWorkbook对象(excel的文档对象)
@@ -64,5 +49,4 @@ public class DemoApplicationTests {
         output.close();
         return null;
     }
-
 }

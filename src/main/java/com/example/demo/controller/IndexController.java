@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.Date;
 
+import com.example.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,12 @@ public class IndexController extends BaseController {
 		return view;
 	}
 	
-	@RequestMapping("/name")
-	public @ResponseBody String getName(@RequestParam("name") String name) {
-		return "Hello " + name;
+	@RequestMapping("/search")
+	public ModelAndView getName(User user) {
+        ModelAndView view = new ModelAndView("/index");
+        view.addObject("users", userService.allUserInfo());
+        view.addObject("dictionarys", super.dictionaryListByParentName(CommUtil.Property.DICTIONARY_PARENT_NAME_CHARACTER_TYPE));
+        return view;
 	}
 	
 	@RequestMapping("/date")
