@@ -34,7 +34,7 @@ public class AOPConfig {
 			long end = System.currentTimeMillis();
 			long logTime = end - start;
 			System.out.println("方法执行结果"+o);
-			System.out.println("方法用时" +(logTime/1000.00)+ "秒");
+			System.out.println("方法用时" + logTime + "毫秒");
 			return o;
 		} catch (Exception e) {
 			log.info("==============系统异常！==============\n【异常方法】:{}\n【异常代码】:{}\n【异常信息】:{}\n【请求的参数】:{}", pjp.getTarget().getClass().getName() + pjp.getSignature().getName(), e.getClass().getName(), e.getMessage(), Arrays.asList(args));
