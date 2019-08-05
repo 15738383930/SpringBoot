@@ -3,9 +3,13 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,22 +31,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> allUserInfo() {
-		return userDao.findAll();
+		// 根据age、id依次倒序排序
+		Sort sort = new Sort(Sort.Direction.DESC, "age", "id");
+		return userDao.findAll(sort);
 	}
 
 	@Override
 	public List<User> userSearch(User user) {
-		boolean flag = false;
-		/*User.setUser(user) ;
-		if (null != user) {
-			if (user.getName())
-				Arrays.stream()
-		} else {
-		}
-		if (flag) {
-			USERS = allUserInfo();
-		}*/
-		return User.getUsers();
+		ExampleMatcher em = ExampleMatcher.matching()
+				.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.startsWith())
+				.withIgnorePaths("id");
+		Example e = Example.of(user, em);
+		return userDao.findAll(e);
 	}
 
 	@Override

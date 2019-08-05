@@ -4,3 +4,14 @@
 	float: left;
 	margin-left: 10px;
 }
+.zh-add-button {
+	float: right;
+	margin-right: 10px;
+}
+.zh-date-input {
+	padding: 9%;
+}
+.zh-groups-input {
+	position: relative;
+	left: 2%;
+}

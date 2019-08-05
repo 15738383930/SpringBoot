@@ -36,7 +36,6 @@ public class UserController {
 	
 	/**
 	 * 查询用户信息集合
-	 * @param id
 	 * @return
 	 */
 	@GetMapping("/list/*.json")
@@ -84,9 +83,9 @@ public class UserController {
 			return Result.fail("新增用户信息失败！请刷新后再试。");
 		}
 		try {
-			if(userService.addUserInfo(userForm)) {
+			/*if(userService.addUserInfo(userForm)) {
 				return Result.ok("新增用户信息成功！");
-			}
+			}*/
 		} catch (Exception e) {
 			log.info("【新增用户】===新增用户信息失败！=====异常信息：{}", e);
 		}

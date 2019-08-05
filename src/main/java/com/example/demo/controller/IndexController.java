@@ -3,15 +3,12 @@ package com.example.demo.controller;
 import java.util.Date;
 
 import com.example.demo.entity.User;
+import com.example.demo.form.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.service.UserService;
@@ -34,16 +31,20 @@ public class IndexController extends BaseController {
 	
 	@GetMapping("/")
 	public ModelAndView index(){
+		System.out.println(UserForm.getUserForm().getName());
 		ModelAndView view = new ModelAndView("/index");
 		view.addObject("users", userService.allUserInfo());
 		view.addObject("dictionarys", super.dictionaryListByParentName(CommUtil.Property.DICTIONARY_PARENT_NAME_CHARACTER_TYPE));
 		return view;
 	}
 	
-	@RequestMapping("/search")
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView getName(User user) {
         ModelAndView view = new ModelAndView("/index");
-        view.addObject("users", userService.allUserInfo());
+        // 数据回显
+		view.addObject("echo", user);
+		// 查询结果
+        view.addObject("users", userService.userSearch(user));
         view.addObject("dictionarys", super.dictionaryListByParentName(CommUtil.Property.DICTIONARY_PARENT_NAME_CHARACTER_TYPE));
         return view;
 	}

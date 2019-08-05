@@ -4,25 +4,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 import com.example.demo.entity.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * SpringMVC配置
+ * @Author zhou
+ * @Date  2019/8/5 17:11
+ */
 @Configuration
-/*@ComponentScan(basePackages = {"com.example.demo.controller"})
-@EnableWebMvc   // 启用spring mvc
-@EnableSpringDataWebSupport */    // 启用springmvc对spring data的支持
 public class MvcConfigurer implements WebMvcConfigurer {
-	
+
 	/**
 	 * 拦截器
 	 */
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 增加一个拦截器，检查会话，URL以admin开头的都使用此拦截器
 		registry.addInterceptor(new SessionHandlerInterCeptor()).addPathPatterns("/admin/**");
@@ -45,16 +51,17 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	}
 	
 	/**
-	 * 格式化
+	 * 日期转换器
 	 */
+	@Override
 	public void addFormatters(FormatterRegistry registry) {
-		//DateFormatter类实现将字符串转为日期类型java.util.Date
-		registry.addFormatter(new DateFormatter("yyyy-MM-dd HH:mm:ss"));
+		registry.addConverter(new CustomDateConveter());
 	}
 	
 	/**
 	 * URI到视图的映射
 	 */
+	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		// 请求index.html，返回index.btl视图。
 		registry.addViewController("/index.html").setViewName("/index.btl");
@@ -76,6 +83,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 		 * @param handler
 		 * @throws Exception
 		 */
+		@Override
 		public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
 			User user = (User) request.getSession().getAttribute("user");
 			if(user == null) {
@@ -103,6 +111,35 @@ public class MvcConfigurer implements WebMvcConfigurer {
 			// 页面渲染完毕后调用此方法，通常用来清除某些资源，类似Java语法的finally
 		}
 	}
-	
+
+	class CustomDateConveter implements Converter<String, Date> {
+
+		@Override
+		public Date convert(String source) {
+			if(!StringUtils.isEmpty(source)){
+				SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String regExt1 = "^\\d{4}-\\d{2}-\\d{2}$";
+				String regExt2 = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}$";
+
+				try {
+					if(source.matches(regExt1)) {
+						return sdfDate.parse(source);
+					} else if (source.matches(regExt2)) {
+						return sdfTime.parse(source);
+					} else {
+						throw new RuntimeException("日期格式错误");
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+			//失败返回null
+			return null;
+		}
+
+	}
+
 	//其他更多全局定制接口
 }

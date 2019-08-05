@@ -7,6 +7,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Date;
 
 public class UserForm {
 
@@ -20,19 +24,75 @@ public class UserForm {
 	@NotNull(groups= {Update.class})
     private Integer id;
 
-	//@Size(min=3,max=12)
-	//用户名：以字母开头，可带数字、下划线、. 等字符 长度3到12
-	@Pattern(regexp="^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){2,11}$")
-    private String userName;
+	//人物姓名
+	@Value("${zh.interface.name}")
+	private String name;
 
-    @Size(min=8,max=16)
-    private String passWord;
+	//人物类型（详情请查阅数据库）
+	private String type;
 
-    @Range(min=1,max=120)
-    private Integer age;
-    
-    @Email
-    private String email;
+	//人物年龄
+	private Integer age;
+
+	//人物性别
+	private String sex;
+
+	//幸运日
+	private Date luckyDay;
+
+	//人物肖像（URL）
+	private String portrait;
+
+	// 人物肖像
+	private MultipartFile portraitFile;
+
+	private final static UserForm userForm = new UserForm();
+
+	public UserForm() {}
+
+	public static UserForm getUserForm(){
+		return userForm;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public Date getLuckyDay() {
+		return luckyDay;
+	}
+
+	public void setLuckyDay(Date luckyDay) {
+		this.luckyDay = luckyDay;
+	}
+
+	public String getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
 
     public Integer getId() {
         return id;
@@ -49,28 +109,4 @@ public class UserForm {
     public void setAge(Integer age) {
         this.age = age;
     }
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassWord() {
-		return passWord;
-	}
-
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
 }
