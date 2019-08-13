@@ -9,53 +9,53 @@
     Z = {
         message: {
             info: function(content){
-                message("info", null, content,null, null);
+                message(M_INFO_ICON, M_INFO_TIMEOUT, content, M_INFO_TRANSITION, null);
             },
             success: function(content){
-                message("success", null, content, null, null);
+                message(M_SUCCESS_ICON, M_SUCCESS_TIMEOUT, content, M_SUCCESS_TRANSITION, null);
             },
             error: function(content){
-                message("error", 5000, content, 300, true);
+                message(M_ERROE_ICON, M_ERROE_TIMEOUT, content, M_ERROE_TRANSITION, true);
             },
             warning: function(content){
-                message("warning", 3000, content, null, null);
+                message(M_WARNING_ICON, M_WARNING_TIMEOUT, content, M_WARNING_TRANSITION, null);
             },
             question: function(content){
-                message("question", 4000, content, null, true);
+                message(M_QUESTION_ICON, M_QUESTION_TIMEOUT, content, M_QUESTION_TRANSITION, true);
             }
         },
         alert: {
             info: function(content){
-                alert("info", null, "温馨提示", content, null, true, null, true);
+                alert(M_INFO_ICON, M_INFO_TIMEOUT, "温馨提示", content, M_INFO_TRANSITION, true, null, true);
             },
             success: function(content){
-                alert("success", null, "成功提示", content, null, true, null, true);
+                alert(M_SUCCESS_ICON, M_SUCCESS_TIMEOUT, "成功提示", content, M_SUCCESS_TRANSITION, true, null, true);
             },
             error: function(content){
-                alert("error", 5000, "失败提示", content, 500, true, null, null);
+                alert(M_ERROE_ICON, M_ERROE_TIMEOUT, "失败提示", content, M_ERROE_TRANSITION, true, null, null);
             },
             warning: function(content){
-                alert("warning", null, "警告提示", content, 400, null, null, null);
+                alert(M_WARNING_ICON, M_WARNING_TIMEOUT, "警告提示", content, M_WARNING_TRANSITION, null, null, null);
             },
             question: function(content){
-                alert("question", 4000, "询问提示", content, 300, true, null, null);
+                alert(M_QUESTION_ICON, M_QUESTION_TIMEOUT, "询问提示", content, M_QUESTION_TRANSITION, true, null, null);
             }
         },
         B_alert: {
             info: function(title, content){
-                alert("info", null, title, content, null, true, null, true);
+                alert(M_INFO_ICON, M_INFO_TIMEOUT, title, content, M_INFO_TRANSITION, true, null, true);
             },
             success: function(title, content){
-                alert("success", null, title, content, null, true, null, true);
+                alert(M_SUCCESS_ICON, M_SUCCESS_TIMEOUT, title, content, M_SUCCESS_TRANSITION, true, null, true);
             },
             error: function(title, content){
-                alert("error", 5000, title, content, 500, true, null, null);
+                alert(M_ERROE_ICON, M_ERROE_TIMEOUT, title, content, M_ERROE_TRANSITION, true, null, null);
             },
             warning: function(title, content){
-                alert("warning", null, title, content, 400, null, null, null);
+                alert(M_WARNING_ICON, M_WARNING_TIMEOUT, title, content, M_WARNING_TRANSITION, null, null, null);
             },
             question: function(title, content){
-                alert("question", 4000, title, content, 300, true, null, null);
+                alert(M_QUESTION_ICON, M_QUESTION_TIMEOUT, title, content, M_QUESTION_TRANSITION, true, null, null);
             }
         },
         confirm: A_confirm,
@@ -72,10 +72,10 @@
 function D_confirm(content){
     $modal({
         type: 'confirm', //弹框类型  'alert' or  'confirm' or 'message'   message提示(开启之前如果之前含有弹框则清除)
-        icon: 'question', // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
+        icon: M_QUESTION_ICON, // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
         title: '询问提醒',
         content: content,
-        transition: 300, //过渡动画 默认 200   单位ms
+        transition: M_QUESTION_TRANSITION, //过渡动画 默认 200   单位ms
         closable: true, // 是否显示可关闭按钮  默认为 false
         mask: true, // 是否显示遮罩层   默认为 false
         top: 400, //距离顶部距离 单位px
@@ -102,7 +102,7 @@ function A_confirm(content, confirm){
             icon: 'question', // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
             title: '询问提醒',
             content: content,
-            transition: 300, //过渡动画 默认 200   单位ms
+            transition: M_QUESTION_TRANSITION, //过渡动画 默认 200   单位ms
             closable: true, // 是否显示可关闭按钮  默认为 false
             mask: true, // 是否显示遮罩层   默认为 false
             top: 400, //距离顶部距离 单位px
@@ -130,10 +130,10 @@ function B_confirm(title, content, confirm){
     if(title && content && confirm && $.isFunction(confirm)){
         $modal({
             type: 'confirm', //弹框类型  'alert' or  'confirm' or 'message'   message提示(开启之前如果之前含有弹框则清除)
-            icon: 'question', // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
+            icon: M_QUESTION_ICON, // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
             title: title,
             content: content,
-            transition: 300, //过渡动画 默认 200   单位ms
+            transition: M_QUESTION_TRANSITION, //过渡动画 默认 200   单位ms
             closable: true, // 是否显示可关闭按钮  默认为 false
             mask: true, // 是否显示遮罩层   默认为 false
             top: 400, //距离顶部距离 单位px
@@ -162,10 +162,10 @@ function C_confirm(title, content, cancel, confirm){
     if(title && content && cancel && confirm && $.isFunction(cancel) && $.isFunction(confirm)){
         $modal({
             type: 'confirm', //弹框类型  'alert' or  'confirm' or 'message'   message提示(开启之前如果之前含有弹框则清除)
-            icon: 'question', // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
+            icon: M_QUESTION_ICON, // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
             title: title,
             content: content,
-            transition: 300, //过渡动画 默认 200   单位ms
+            transition: M_INFO_TRANSITION, //过渡动画 默认 200   单位ms
             closable: true, // 是否显示可关闭按钮  默认为 false
             mask: true, // 是否显示遮罩层   默认为 false
             top: 400, //距离顶部距离 单位px
@@ -193,8 +193,8 @@ function C_confirm(title, content, cancel, confirm){
  * @param closable 是否显示可关闭按钮  默认为 false
  */
 function message(icon, timeout, content, transition, closable) {
-    if(!timeout){ timeout = 2000; }
-    if(!transition){ transition = 200; }
+    if(!timeout){ timeout = M_INFO_TIMEOUT; }
+    if(!transition){ transition = M_INFO_TRANSITION; }
     $modal({
         type: 'message', //弹框类型  'alert' or  'confirm' or 'message'  message提示(开启之前如果之前含有弹框则清除)
         icon: icon,
@@ -220,8 +220,8 @@ function message(icon, timeout, content, transition, closable) {
  * @param maskClose 是否点击遮罩层可以关闭提示框 默认为false
  */
 function alert(icon, timeout, title, content, transition, closable, width, maskClose){
-    if(!timeout){ timeout = 2000; }
-    if(!transition){ transition = 200; }
+    if(!timeout){ timeout = M_INFO_TIMEOUT; }
+    if(!transition){ transition = M_INFO_TRANSITION; }
     if(!width){ width = 300; }
     $modal({
         type: 'alert', //弹框类型  'alert' or  'confirm' or 'message'  message提示(开启之前如果之前含有弹框则清除)

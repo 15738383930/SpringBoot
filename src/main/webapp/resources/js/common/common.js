@@ -6,7 +6,7 @@
 $(function () {
 
     // 开启title样式
-    $(".zh-tooltip").tooltip();
+    renderingTooltip();
 
     /*$('.confirm').click(function(){
         $modal({
@@ -42,3 +42,25 @@ $(function () {
     })*/
 
 })
+
+/**
+ * 渲染标签title
+ */
+function renderingTooltip() {
+    $("[data-toggle='tooltip']").tooltip();
+}
+
+/**
+ * 成功回调
+ * @param msg 成功消息
+ */
+function successCallback(msg){
+    if(msg){
+        Z.message.success(msg);
+        setTimeout(function () {
+            window.location.reload();
+        }, M_SUCCESS_CALLBACK)
+    }else{
+        window.location.reload();
+    }
+}

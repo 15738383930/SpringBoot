@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
+import com.example.demo.utils.CommUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,18 +77,20 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/saveResult.json")
-	public Result saveUser(@Validated({UserForm.Add.class}) UserForm userForm,BindingResult result) {
+	public Result saveUser(@Validated({UserForm.Add.class}) UserForm userForm, BindingResult result) {
 		if(result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			FieldError error = (FieldError)list.get(0);
-			System.out.println(error.getObjectName()+","+error.getField()+","+error.getDefaultMessage());
-			log.error("【新增用户】===表单数据格式有误。");
-			return Result.fail("新增用户信息失败！请刷新后再试。");
+			System.out.println(error.getObjectName()+","+error.getField()+  ","+error.getDefaultMessage());
+			log.error("【新增用户】===表单数据有误。");
+			return Result.fail(error.getField(), error.getDefaultMessage());
 		}
 		try {
-			/*if(userService.addUserInfo(userForm)) {
+			// 上传图片
+			userForm.setPortrait(CommUtil.Method.uploadImage(userForm.getPortraitFile()));
+			if(userService.addUserInfo(userForm)) {
 				return Result.ok("新增用户信息成功！");
-			}*/
+			}
 		} catch (Exception e) {
 			log.info("【新增用户】===新增用户信息失败！=====异常信息：{}", e);
 		}

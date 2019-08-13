@@ -23,9 +23,8 @@
 					<div class="col-sm-3">
 						<input autocomplete="off" type="text" class="form-control" name="name" value="${echo.name }" placeholder="昵称(支持模糊检索)">
 					</div>
-					<button type="submit" title="点击查询" class="btn btn-primary zh-search-button zh-tooltip"><i class="fa fa-search bigger-110" ></i> 检 索</button>
-					<button id="qu" type="button" title="点击查询" class="btn btn-primary zh-search-button zh-tooltip"><i class="fa fa-search bigger-110" ></i> 点 我</button>
-					<button type="button" data-placement="left" title="添加人物信息" class="btn btn-success zh-add-button zh-tooltip" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus"></i> 新 增</button>
+					<button type="submit" title="点击查询" class="btn btn-primary zh-search-button" data-toggle="tooltip"><i class="fa fa-search bigger-110" ></i> 检 索</button>
+					<button id="toSaveUserPage" type="button" data-toggle="tooltip" data-placement="left" title="添加人物信息" class="btn btn-success zh-add-button"><i class="fa fa-plus"></i> 新 增</button>
 				</form>
 			</fieldset>
 			</br></br>
@@ -33,7 +32,7 @@
 				<table class="table">
 					<thead style="text-align: center;">
 						<tr>
-							<th class="text-center">选择</th>
+							<th class="text-center">排名</th>
 							<th class="text-center">昵称</th>
 							<th class="text-center">性别</th>
 							<th class="text-center">年龄</th>
@@ -42,9 +41,9 @@
 						</tr>
 					</thead>
 					<tbody class="text-center">
-						<c:forEach var="user" items="${users}">
+						<c:forEach var="user" items="${users}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name="items_id" value="${user.id }" /></td>
+								<td>${status.index + 1}</td>
 								<td>${user.name}</td>
 								<td>${user.sex}</td>
 								<td>${user.age}</td>
@@ -56,17 +55,9 @@
 									</c:forEach>
 								</td>
 								<td>
-								<!-- ${pageContext.request.contextPath } 相当于 'basePath'
-								
-									非REST的url
-								<a href="items/editItems.action?id=${items.id }">
-									REST的url（使用中）
-								<a href="items/itemView/${items.id }">
-								-->
-								<a href="${ctx}/items/itemView/${user.id }">修改</a>
-									&nbsp;<a
-									href="${ctx}/#">删除</a>
-									</td>
+									<button type="button" title="修改人物信息" class="btn btn-xs btn-info toUpdateUserPage" data-toggle="tooltip"><i class="fa fa-pencil-square-o bigger-110" ></i> 编 辑</button>
+									<button type="button" title="删除人物信息" class="btn btn-xs btn-danger deleteUserInfo" data-toggle="tooltip"><i class="fa fa-close bigger-110" ></i> 删 除</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -96,12 +87,12 @@
 								</div>
 								<label for="u_age" class="col-sm-2 control-label">年龄</label>
 								<div class="col-sm-3 input-group input-group-sm zh-groups-input">
-									<input class="form-control" id="u_age" name="age" type="text" value="" placeholder="您已修行多少载？">
+									<input class="form-control" id="u_age" name="age" type="number" value="" placeholder="修行几载？">
 									<span class="input-group-addon">载</span>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="u_type" class="col-sm-2 control-label">用户类型</label>
+								<label for="u_type" class="col-sm-2 control-label">人物类型</label>
 								<div class="col-sm-4">
                                     <select id="u_type" name="type" class="form-control">
                                         <option value="">请选择</option>
@@ -111,10 +102,11 @@
                                     </select>
 								</div>
 								<label for="u_man" class="col-sm-2 control-label">性别</label>
-								<div class="col-sm-4 btn-group zh-tooltip" title="不要站错队哦~">
-									<button type="button" id="u_man" name="sex" class="btn btn-default" value=""><i class="fa fa-mars bigger-110"></i> 男</button>
-									<button type="button" id="u_woman" name="sex" class="btn btn-default" value=""><i class="fa fa-venus bigger-110"></i> 女</button>
+								<div class="col-sm-4 btn-group" data-toggle="tooltip" title="不要站错队哦~">
+									<button type="button" id="u_man" name="sex_e" class="btn btn-default"><i class="fa fa-mars bigger-110"></i> 男</button>
+									<button type="button" id="u_woman" name="sex_e" class="btn btn-default"><i class="fa fa-venus bigger-110"></i> 女</button>
 								</div>
+								<input id="u_sex" type="hidden" name="sex" value="未知">
 							</div>
                             <div class="form-group">
 								<label for="u_luckyDay" class="col-sm-2 control-label">幸运日</label>
@@ -125,7 +117,7 @@
                             <div class="form-group">
                                 <label for="u_portrait" class="col-sm-2 control-label">人物肖像</label>
                                 <div class="col-sm-10">
-                                    <input id="u_portrait" class="zh-tooltip" type="file" multiple="multiple" name="portraitFile" value="" title="您貌若天仙的肖像^_^">
+                                    <input id="u_portrait" data-toggle="tooltip" type="file" multiple="multiple" name="portraitFile" value="" title="您貌若天仙的肖像^_^">
 									<br/>
 									<img id="u_portrait_img" src="" hidden class="img-responsive img-circle" alt="您貌若天仙的肖像^_^" width="200" height="200">
                                 </div>

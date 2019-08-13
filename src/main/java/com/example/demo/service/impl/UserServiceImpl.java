@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userDao;
 
+	private static User user = new User();
+
 	@Override
 	public List<User> allUserInfo() {
 		// 根据age、id依次倒序排序
@@ -51,21 +53,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean addUserInfo(UserForm userForm) {
-		BeanUtils.copyProperties(userForm, User.getUser());
-		return true;
+		BeanUtils.copyProperties(userForm, user);
+		user = userDao.saveAndFlush(user);
+		if(user != null){
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean updateUserInfo(UserForm userForm) {
-		BeanUtils.copyProperties(userForm, User.getUser());
+		BeanUtils.copyProperties(userForm, user);
+		userDao.saveAndFlush(user);
 		return true;
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean deleteUserInfo(User user) {
 		return false;
 	}

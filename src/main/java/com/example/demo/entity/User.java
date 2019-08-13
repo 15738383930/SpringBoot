@@ -34,7 +34,7 @@ public class User {
     private String name;
 
     //人物类型（详情请查阅数据库）
-    private String type;
+    private Integer type;
 
     //人物年龄
     private Integer age;

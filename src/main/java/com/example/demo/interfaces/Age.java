@@ -1,6 +1,9 @@
 package com.example.demo.interfaces;
 
 
+import com.example.demo.utils.CommUtil;
+import com.example.demo.validator.AgeValidator;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,15 +18,15 @@ import javax.validation.Payload;
  * @author zhouhao
  *
  */
-@Constraint(validatedBy = {})
-@Documented
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Constraint(validatedBy = {AgeValidator.class})
 public @interface Age {
 	
 	String message() default "年龄不能超过{max}岁";
 	
-	int max() default 5;
+	int max() default CommUtil.Property.AGE_MAX_DEFAULT;
 	
 	Class<?>[] groups() default {};
 	

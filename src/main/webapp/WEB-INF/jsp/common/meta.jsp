@@ -6,6 +6,7 @@
 <script type="text/javascript" src="${ctx}/resources/js/common/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="${ctx}/resources/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/resources/js/common/constant.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/common/modal_dialog.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/common/message.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/common/common.js"></script>

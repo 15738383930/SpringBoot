@@ -31,7 +31,6 @@ public class IndexController extends BaseController {
 	
 	@GetMapping("/")
 	public ModelAndView index(){
-		System.out.println(UserForm.getUserForm().getName());
 		ModelAndView view = new ModelAndView("/index");
 		view.addObject("users", userService.allUserInfo());
 		view.addObject("dictionarys", super.dictionaryListByParentName(CommUtil.Property.DICTIONARY_PARENT_NAME_CHARACTER_TYPE));

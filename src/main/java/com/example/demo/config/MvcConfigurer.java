@@ -51,7 +51,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	}
 	
 	/**
-	 * 日期转换器
+	 * 日期格式初始化
 	 */
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
@@ -112,6 +112,11 @@ public class MvcConfigurer implements WebMvcConfigurer {
 		}
 	}
 
+	/**
+	 * 日期转换器
+	 * @Author zhou
+	 * @Date  2019/8/6 16:06
+	 */
 	class CustomDateConveter implements Converter<String, Date> {
 
 		@Override
@@ -126,8 +131,8 @@ public class MvcConfigurer implements WebMvcConfigurer {
 					if(source.matches(regExt1)) {
 						return sdfDate.parse(source);
 					} else if (source.matches(regExt2)) {
-						return sdfTime.parse(source);
-					} else {
+                        return sdfTime.parse(source);
+                    } else {
 						throw new RuntimeException("日期格式错误");
 					}
 				} catch (ParseException e) {
