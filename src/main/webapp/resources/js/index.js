@@ -5,6 +5,11 @@
  */
 
 /**
+ * 编辑表单id
+ * @type {string}
+ */
+var editUserForm = "#editUserForm";
+/**
  * 人物表单提交按钮
  * @type {string}
  */
@@ -15,60 +20,61 @@ var uSex = "#u_sex";
 // 性别索引-男
 var manI = 0;
 // 性别索引-女
-const womanI = 1;
+var womanI = 1;
+// 图片span
+var portrait_span = "u_portrait_span";
 $(function () {
 
-    // 性别切换 （实现方式有多种，这里也许不是最简便的）
+    // 性别切换
     $(btnSex).on("click", function () {
         var clazz = $(this).attr(CLASS);
-        var value = $(this).val();
-        if (clazz.indexOf(B_C_BTN_INFO) > -1) {
-            $(this).removeClass(B_C_BTN_INFO).addClass(B_C_BTN_DEFAULT);
-            $(btnSex).eq(womanI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
-            $(uSex).val(SEX_DEF);
-        } else if (clazz.indexOf(B_C_BTN_DANGER) > -1) {
-            $(this).removeClass(B_C_BTN_DANGER).addClass(B_C_BTN_DEFAULT);
-            $(btnSex).eq(manI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
-            $(uSex).val(SEX_DEF);
-        } else if (clazz.indexOf(B_C_BTN_DEFAULT) > -1 && $.trim($(this).text()) == MAN) {
+        if (clazz.indexOf(B_C_BTN_DEFAULT) > -1 && $.trim($(this).text()) == MAN) {
+            $(btnSex).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
             $(this).removeClass(B_C_BTN_DEFAULT).addClass(B_C_BTN_INFO);
-            $(btnSex).eq(womanI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
             $(uSex).val(MAN);
         } else if (clazz.indexOf(B_C_BTN_DEFAULT) > -1 && $.trim($(this).text()) == WOMAN) {
+            $(btnSex).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
             $(this).removeClass(B_C_BTN_DEFAULT).addClass(B_C_BTN_DANGER);
-            $(btnSex).eq(manI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
             $(uSex).val(WOMAN);
         } else {
-            $(btnSex).eq(manI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
-            $(btnSex).eq(womanI).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
+            $(btnSex).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
             $(uSex).val(SEX_DEF);
         }
     });
 
-    $("#toSaveUserPage").click(toSaveUserPage);
+    $("#toSaveUserPage").click(function () {
+        toSaveUserPage($(this));
+    });
 
     $(submitUser).on('click',saveUserInfo);
 
     $(".toUpdateUserPage").click(function () {
         toUpdateUserPage($(this));
     });
+
+    // 开启模态框事件
+    modalId = "#userModal";
+    modalEvent();
 });
 
 /**
  * 跳转人物添加页面
+ * @param obj 添加按钮
  */
-function toSaveUserPage() {
+function toSaveUserPage(obj) {
+    // 模态框操作对象
+    $obj = obj;
+    reset();
     $(submitUser).unbind('click').on('click',saveUserInfo);
-    $("#userModal").modal("show");
+    $(modalId).modal("show");
 }
 
 /**
  * 新增人物信息
  */
 function saveUserInfo() {
-    var $userForm = $("#editUserForm");
     $(submitUser).attr(DISABLED, true);
-    var formData = new FormData($userForm[0]);
+    var formData = new FormData($(editUserForm)[0]);
     $.ajax({
         type: POST,
         url: SYS_CTX + "/user/saveResult.json",
@@ -119,17 +125,45 @@ function saveUserInfo() {
  * @param obj 编辑按钮
  */
 function toUpdateUserPage(obj) {
+    // 模态框操作对象
+    $obj = obj;
+    reset();
     $(submitUser).unbind('click').on('click',updateUserInfo);
-    $("#userModal").modal("show");
+    $.ajax({
+        type: GET,
+        url: SYS_CTX + '/user/'+ obj.val() +'.json',
+        dataType: 'json',
+        success: function (data) {
+            if (data.code == 1) {
+                var result = data.data;
+                if(result){
+                    //信息变更前的name
+                    var name = null;
+                    //信息变更前的value
+                    var value = null;
+                    for(var key in result){
+                        $(editUserForm + " [name='"+ key +"']").val(result[key]);
+                    }
+                    sexRendering(result.sex);
+                    loadImage(result.portrait);
+                }
+            } else {
+                Z.message.warning(data.msg);
+            }
+        },
+        error: function (data) {
+            Z.alert.error(C_ERROR_MSG);
+        }
+    });
+    $(modalId).modal("show");
 }
 
 /**
  * 修改人物信息
  */
 function updateUserInfo() {
-    var $userForm = $("#editUserForm");
     $(submitUser).attr(DISABLED, true);
-    var formData = new FormData($userForm[0]);
+    var formData = new FormData($(editUserForm)[0]);
     $.ajax({
         type: POST,
         url: SYS_CTX + "/user/editResult.json",
@@ -151,4 +185,39 @@ function updateUserInfo() {
             Z.alert.error(C_ERROR_MSG);
         }
     })
+}
+
+/**
+ * 表单重置
+ */
+function reset() {
+    $(editUserForm).find("input").val("");
+    $(editUserForm).find("select").val("");
+    $(editUserForm).find("#" + portrait_span).remove();
+    $(btnSex).attr(CLASS, B_C_BTN + B_C_BTN_DEFAULT);
+    $(uSex).val(SEX_DEF);
+}
+
+/**
+ * 性别渲染
+ * @param sex
+ */
+function sexRendering(sex) {
+    if (sex) {
+        if (sex == MAN) {
+            $(btnSex).eq(manI).removeClass(B_C_BTN_DEFAULT).addClass(B_C_BTN_INFO);
+        } else if (sex == WOMAN) {
+            $(btnSex).eq(womanI).removeClass(B_C_BTN_DEFAULT).addClass(B_C_BTN_DANGER);
+        }
+    }
+}
+
+/**
+ * 加载图片
+ * @param imageUrl
+ */
+function loadImage(imageUrl) {
+    if(imageUrl){
+        $("#portrait_div").append('<span id="'+ portrait_span +'"><br/><img src="'+ imageUrl +'" class="img-responsive img-circle" alt="您貌若天仙的肖像^_^" width="200" height="200"></span>');
+    }
 }

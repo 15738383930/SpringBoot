@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.example.demo.entity.User;
@@ -24,27 +25,27 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> userSearch(User user);
-	
+
 	/**
 	 * 根据id查询用户信息
 	 * @param id
 	 * @return
 	 */
 	User queryUserById(int id);
-	
+
 	/**
 	 * 添加用户信息
 	 * @param userForm
 	 * @return
 	 */
-	boolean addUserInfo(UserForm userForm);
+	boolean addUserInfo(UserForm userForm) throws IOException;
 
 	/**
 	 * 修改用户信息
 	 * @param userForm
 	 * @return
 	 */
-	boolean updateUserInfo(UserForm userForm);
+	boolean updateUserInfo(UserForm userForm) throws IOException;
 
 	/**
 	 * 删除用户信息（伪删除）

@@ -55,8 +55,8 @@
 									</c:forEach>
 								</td>
 								<td>
-									<button type="button" title="修改人物信息" class="btn btn-xs btn-info toUpdateUserPage" data-toggle="tooltip"><i class="fa fa-pencil-square-o bigger-110" ></i> 编 辑</button>
-									<button type="button" title="删除人物信息" class="btn btn-xs btn-danger deleteUserInfo" data-toggle="tooltip"><i class="fa fa-close bigger-110" ></i> 删 除</button>
+									<button type="button" title="修改人物信息" class="btn btn-xs btn-info toUpdateUserPage" data-toggle="tooltip" value="${user.id}"><i class="fa fa-pencil-square-o bigger-110" ></i> 编 辑</button>
+									<button type="button" title="删除人物信息" class="btn btn-xs btn-danger deleteUserInfo" data-toggle="tooltip" value="${user.id}"><i class="fa fa-close bigger-110" ></i> 删 除</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -116,10 +116,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="u_portrait" class="col-sm-2 control-label">人物肖像</label>
-                                <div class="col-sm-10">
+                                <div id="portrait_div" class="col-sm-10">
                                     <input id="u_portrait" data-toggle="tooltip" type="file" multiple="multiple" name="portraitFile" value="" title="您貌若天仙的肖像^_^">
-									<br/>
-									<img id="u_portrait_img" src="" hidden class="img-responsive img-circle" alt="您貌若天仙的肖像^_^" width="200" height="200">
                                 </div>
                             </div>
 							<div class="form-group has-success">

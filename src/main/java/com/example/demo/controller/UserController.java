@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.demo.entity.User;
 import com.example.demo.utils.CommUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +45,10 @@ public class UserController {
 	@GetMapping("/list/*.json")
 	public Result listUser() {
 		try {
-			return Result.ok(userService.allUserInfo(),"查询用户信息集合成功！");
+			return Result.ok(userService.allUserInfo());
 		} catch (Exception e) {
 			log.info("查询用户信息集合失败！{}", e);
-			return Result.fail("查询用户信息集合失败！");
+			return Result.fail(CommUtil.Property.RESULT_QUERY_ERROR_MSG);
 		}
 	}
 	
@@ -57,16 +58,16 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/{id}.json")
-	public Result getUserId(@PathVariable int id) {
+	public Result getUserById(@PathVariable int id) {
 		try {
 			if(id <= 0) {
 				log.error("查询用户信息失败！用户id不能为空。");
-				return Result.fail("系统异常！请刷新后再试。");
+				return Result.fail(CommUtil.Property.RESULT_QUERY_ERROR_MSG);
 			}
-			return Result.ok(userService.queryUserById(id),"查询用户信息集合成功！");
+			return Result.ok(userService.queryUserById(id));
 		} catch (Exception e) {
 			log.info("查询用户信息失败！用户id：{}。=====异常信息：{}", id, e);
-			return Result.fail("查询用户信息集合失败！");
+			return Result.fail(CommUtil.Property.RESULT_QUERY_ERROR_MSG);
 		}
 	}
 	
@@ -81,20 +82,17 @@ public class UserController {
 		if(result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			FieldError error = (FieldError)list.get(0);
-			System.out.println(error.getObjectName()+","+error.getField()+  ","+error.getDefaultMessage());
 			log.error("【新增用户】===表单数据有误。");
 			return Result.fail(error.getField(), error.getDefaultMessage());
 		}
 		try {
-			// 上传图片
-			userForm.setPortrait(CommUtil.Method.uploadImage(userForm.getPortraitFile()));
 			if(userService.addUserInfo(userForm)) {
-				return Result.ok("新增用户信息成功！");
+				return Result.ok(CommUtil.Property.RESULT_EDIT_SUCCESS_MSG);
 			}
 		} catch (Exception e) {
 			log.info("【新增用户】===新增用户信息失败！=====异常信息：{}", e);
 		}
-		return Result.fail("新增用户信息失败！");
+		return Result.fail(CommUtil.Property.RESULT_EDIT_ERROR_MSG);
 	}
 	
 	/**
@@ -103,28 +101,22 @@ public class UserController {
 	 * @param result 验证结果
 	 * @return
 	 */
-	@GetMapping("/editResult.json")
+	@PostMapping("/editResult.json")
 	public Result editUser(@Validated({UserForm.Update.class}) UserForm userForm,BindingResult result) {
 		if(result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			FieldError error = (FieldError)list.get(0);
-			System.out.println(error.getObjectName()+","+error.getField()+","+error.getDefaultMessage());
 			log.error("【编辑用户】===表单数据格式有误。");
-			return Result.fail("编辑用户信息失败！请刷新后再试。");
+            return Result.fail(error.getField(), error.getDefaultMessage());
 		}
 		try {
 			if(userService.updateUserInfo(userForm)) {
-				return Result.ok("编辑用户信息成功！");
+				return Result.ok(CommUtil.Property.RESULT_EDIT_SUCCESS_MSG);
 			}
 		} catch (Exception e) {
-			return Result.fail("编辑用户信息失败！");
+			return Result.fail(CommUtil.Property.RESULT_EDIT_ERROR_MSG);
 		}
-		return Result.fail("编辑用户信息失败！");
-	}
-	
-	@GetMapping("/45.json")
-	public String delUser(@PathVariable int id) {
-		return "您的用户编号为"+id;
+		return Result.fail(CommUtil.Property.RESULT_EDIT_ERROR_MSG);
 	}
 
 }

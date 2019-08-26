@@ -24,11 +24,6 @@ public class IndexController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
-	}
-	
 	@GetMapping("/")
 	public ModelAndView index(){
 		ModelAndView view = new ModelAndView("/index");

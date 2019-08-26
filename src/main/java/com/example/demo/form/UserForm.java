@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
 /**
- * 人物封装对象
+ * 人物Form对象
  * @Author zhou
  * @Date  2019/8/8 10:31
  */
@@ -41,35 +41,35 @@ public class UserForm {
 	 * 1. 2-5个中文
 	 * 2. 4-20个英文（包含单词间的空格）
 	 */
-	@Pattern(regexp = "^[a-zA-Z]{4,20}$|^[\\u4e00-\\u9fa5]{2,5}$", message = "人物昵称由【2-5个中文】或【4-20个英文】组成", groups = {Add.class})
+	@Pattern(regexp = "^[a-zA-Z]{4,20}$|^[\\u4e00-\\u9fa5]{2,5}$", message = "人物昵称由【2-5个中文】或【4-20个英文】组成", groups = {Add.class, Update.class})
 	private String name;
 
 	/**
 	 * 人物类型
 	 * 0-10（详情请查阅数据库）
 	 */
-	@NotNull(message = "请选择人物类型", groups= {Add.class})
-	@Max(value = CommUtil.Property.CHARACTER_TYPE_MAX, message = "请选择正确的人物类型", groups = {Add.class})
+	@NotNull(message = "请选择人物类型", groups= {Add.class, Update.class})
+	@Max(value = CommUtil.Property.CHARACTER_TYPE_MAX, message = "请选择正确的人物类型", groups = {Add.class, Update.class})
 	private Integer type;
 
 	/**
 	 * 人物年龄
 	 * 不超过120岁
 	 */
-	@Age(groups = {Add.class})
+	@Age(groups = {Add.class, Update.class})
 	private Integer age;
 
 	/**
 	 * 人物性别
 	 * 男、女、未知
 	 */
-	@Sex(groups = {Add.class})
+	@Sex(groups = {Add.class, Update.class})
 	private String sex;
 
 	/**
 	 * 幸运日
 	 */
-	@NotNull(message = "请选择幸运日", groups= {Add.class})
+	@NotNull(message = "请选择幸运日", groups= {Add.class, Update.class})
 	private Date luckyDay;
 
 	/**

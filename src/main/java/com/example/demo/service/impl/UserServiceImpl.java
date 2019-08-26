@@ -1,10 +1,12 @@
 package com.example.demo.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.example.demo.utils.CommUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -17,6 +19,7 @@ import com.example.demo.dao.UserRepository;
 import com.example.demo.entity.User;
 import com.example.demo.form.UserForm;
 import com.example.demo.service.UserService;
+import org.springframework.util.StringUtils;
 
 /**
  * 用户业务实现层
@@ -28,8 +31,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userDao;
-
-	private static User user = new User();
 
 	@Override
 	public List<User> allUserInfo() {
@@ -54,7 +55,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public boolean addUserInfo(UserForm userForm) {
+	public boolean addUserInfo(UserForm userForm) throws IOException {
+		// 上传图片
+		userForm.setPortrait(CommUtil.Method.uploadImage(userForm.getPortraitFile()));
+		User user = new User();
 		BeanUtils.copyProperties(userForm, user);
 		user = userDao.saveAndFlush(user);
 		if(user != null){
@@ -65,8 +69,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public boolean updateUserInfo(UserForm userForm) {
-		BeanUtils.copyProperties(userForm, user);
+	public boolean updateUserInfo(UserForm userForm) throws IOException {
+		User user = userDao.findById(userForm.getId());
+		// 上传图片
+		userForm.setPortrait(CommUtil.Method.uploadImage(user.getPortrait(), userForm.getPortraitFile()));
+		CommUtil.Method.copyPropertiesIgnoreNull(userForm, user);
 		userDao.saveAndFlush(user);
 		return true;
 	}

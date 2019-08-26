@@ -276,7 +276,7 @@ function $modal(data) { // data 必传 且为对象
         })
         $('.' + idText + '_item img').css({
             width: titleSize + 4 + 'px',
-            verticalAlign: 'top',
+            verticalAlign: 'middle',
             position: 'relative',
             top: '-1px'
         })
