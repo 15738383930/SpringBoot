@@ -18,16 +18,18 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class DemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		//正常启动
-		//SpringApplication.run(SpringbootOneApplication.class, args);
-		
-		//自定义启动
+		// 自定义启动
         SpringApplication application = new SpringApplication(DemoApplication.class);
-        application.setBannerMode(Mode.OFF); //关闭banner（logo）
+		// 关闭banner（logo）
+        application.setBannerMode(Mode.OFF);
         application.run(args);
 	}
 
-	//重写SpringBootServletInitializer中的configure，功效等同于web.xml
+	/**
+	 * 重写SpringBootServletInitializer中的configure，功效等同于web.xml
+	 * @param builder
+	 * @return
+	 */
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(DemoApplication.class);
