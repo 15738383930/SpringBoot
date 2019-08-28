@@ -9,12 +9,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 /**
  * 项目启动类
- * 1. 因项目用到redis数据库，且没有配置该数据源（没必要），故，排除DataSourceAutoConfiguration.class
- * 2. 因项目需要打war包（已排除内嵌Tomcat）进行平台移植发布，故，继承SpringBootServletInitializer类，实现等同于web.xml的功能
+ *  因项目需要打war包（已排除内嵌Tomcat）进行平台移植发布，故，继承SpringBootServletInitializer类，实现等同于web.xml的功能
  * @author zhou
  *
  */
-@SpringBootApplication(exclude =DataSourceAutoConfiguration.class )
+@SpringBootApplication
 public class DemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
