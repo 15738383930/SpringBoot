@@ -32,8 +32,8 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 增加一个拦截器，检查会话，URL以admin开头的都使用此拦截器
-		// registry.addInterceptor(new SessionHandlerInterCeptor()).addPathPatterns("/admin/**");//.addPathPatterns("/action/**", "/mine/**");默认所有
-		registry.addInterceptor(new ErrorPageInterceptor());
+		registry.addInterceptor(new SessionHandlerInterCeptor()).addPathPatterns("/admin/**");//.addPathPatterns("/action/**", "/mine/**");默认所有
+//		registry.addInterceptor(new ErrorPageInterceptor());
 	}
 	
 	/**

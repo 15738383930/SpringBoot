@@ -5,11 +5,16 @@ import javax.validation.constraints.*;
 import com.example.demo.interfaces.Age;
 import com.example.demo.interfaces.Sex;
 import com.example.demo.utils.CommUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.Date;
 
@@ -19,6 +24,8 @@ import java.util.Date;
  * @Date  2019/8/8 10:31
  */
 @Data
+@Accessors(chain = true)
+@NoArgsConstructor
 public class UserForm {
 
 	/**
@@ -83,6 +90,4 @@ public class UserForm {
 	private MultipartFile portraitFile;
 
 	private final static UserForm userForm = new UserForm();
-
-	public UserForm() {}
 }

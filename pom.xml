@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.zhou.demo</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.example.demo</groupId>
+	<artifactId>SpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<packaging>war</packaging>
+	<name>SpringBoot</name>
+	<packaging>jar</packaging>
 
 	<properties>
 		<!-- Java版本 -->
@@ -17,7 +17,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.2.RELEASE</version>
+		<version>2.0.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 	</dependencies>
 
@@ -137,6 +137,8 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--这个版本springboot可以识别jsp-->
+				<version>1.4.2.RELEASE</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -147,6 +149,24 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<!-- 此处最为重要-否则打包后没有你的JSP页面模板，一定要记得写为资源文件 targetPath 设置必须是 META-INF/resources
+
+            我项目做出来的时候因为没写resources导致打包运行后正常启动，各个接口也都正常访问，但是所有的jsp页面都会报404，找不到页面 ，因为这个问题浪费了我大半天时间-->
+
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>META-INF/resources</targetPath>
+				<includes>
+					<include>**/**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 </project>

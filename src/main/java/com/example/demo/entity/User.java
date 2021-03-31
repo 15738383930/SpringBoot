@@ -12,18 +12,27 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 人物对象
+ * @Table(name="user") 表名
+ * @Data 编译后自动加载Getter,Setter,equals,hashCode,toString方法
+ * @Builder 建造者模式 例：User.builder().age(1).name("哈哈").build();
+ * @NoArgsConstructor 无参构造函数
+ * @AllArgsConstructor 全参构造函数
  * @author zhouhao
  *
  */
 @Entity
-// 表名
 @Table(name="user")
-// 编译后自动加载Getter,Setter,equals,hashCode,toString方法
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 	
 	@Id
@@ -57,19 +66,8 @@ public class User {
         return USER;
     }
 
-    public static User setUser(final User user) {
-        return user;
-    }
-
     public static List<User> getUsers() {
         return USERS;
     }
-
-    public static List<User> getUsers(final List<User> users) {
-        return users;
-    }
-
-    // JPA要求实体必须有一个空的构造函数
-    public User() {}
 
 }

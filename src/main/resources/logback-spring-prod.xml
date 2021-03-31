@@ -5,7 +5,7 @@
         debug="false" scan="true" scanPeriod="30 second">
 
     <property name="PROJECT" value="demo" />
-    <property name="ROOT" value="C:/Users/zhouhao/Desktop/File/LOG/${PROJECT}/" />
+    <property name="ROOT" value="/var/opt/log/${PROJECT}/" />
     <property name="FILESIZE" value="50MB" />
     <property name="MAXHISTORY" value="100" />
     <timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss" />
